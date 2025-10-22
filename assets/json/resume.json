@@ -5,8 +5,8 @@
     "image": "",
     "email": "atersenov@physics.uoc.gr",
     "phone": "(30) 6945775095",
-    "url": "https://AndreasTersenov.github.io/al-folio/",
-    "summary": "PhD candidate focused on weak lensing, mass mapping, simulation-based inference, and higher-order statistics. Member of the Euclid and UNIONS collaborations. Experienced in machine learning, JAX, and statistical cosmology.",
+    "url": "https://andreastersenov.github.io/",
+    "summary": "PhD candidate focused on weak lensing, mass mapping, simulation-based inference, and higher-order statistics. Member of the Euclid and UNIONS collaborations. Experienced in computational cosmology, statistical modeling, and machine learning.",
     "location": {
       "address": "Office 108B, Physics Bldg, Voutes University Campus",
       "postalCode": "GR 70013",
@@ -29,18 +29,12 @@
   },
   "work": [
     {
-      "name": "ICS-FORTH / CosmoStat Laboratory, CEA Paris-Saclay",
+      "name": "IA & ICS-FORTH / CosmoStat Laboratory, CEA Paris-Saclay",
       "position": "PhD Fellow",
       "url": "https://spl.ics.forth.gr/titan/",
       "startDate": "2023-08-01",
       "endDate": "",
-      "summary": "Working on weak lensing mass mapping, higher-order statistics, simulation-based inference, and AI in Cosmology.",
-      "highlights": [
-        "Weak lensing mass mapping",
-        "Higher-order statistics",
-        "Simulation-based inference",
-        "AI in cosmology"
-      ]
+      "summary": "Working on weak lensing mass mapping, higher-order statistics, simulation-based inference, and AI in Cosmology."
     },
     {
       "name": "CosmoStat Laboratory, CEA Paris-Saclay",
@@ -76,7 +70,7 @@
       "institution": "University of Crete / ICS&IA-FORTH / CEA Paris-Saclay",
       "location": "Heraklion, Greece",
       "url": "https://www.physics.uoc.gr/en",
-      "area": "Cosmology",
+      "area": "Computational cosmology",
       "studyType": "PhD",
       "startDate": "2023-08-01",
       "endDate": "",
@@ -104,18 +98,32 @@
   ],
   "volunteer": [
     {
+      "name": "Winter School for Astrostatistics in Sharjah",
+      "position": "Invited Lecturer",
+      "startDate": "2025-11-10",
+      "endDate": "2025-11-14",
+      "summary": "Will teach Bayesian statistics, sampling methods, and SBI."
+    },
+    {
       "name": "Summer School for Astrostatistics in Crete",
-      "position": "Lecturer",
+      "position": "Organiser & Lecturer",
+      "startDate": "2025-06-16",
+      "endDate": "2025-06-20",
+      "summary": "Taught Bayesian statistics, sampling methods, and SBI."
+    },
+    {
+      "name": "Summer School for Astrostatistics in Crete",
+      "position": "Organiser & Lecturer",
       "startDate": "2024-07-08",
       "endDate": "2024-07-12",
-      "summary": "Taught Bayesian statistics, MCMC, Deep Learning, and SBI. Will teach again in 2025."
+      "summary": "Taught Bayesian statistics, Deep Learning, and SBI. "
     },
     {
       "name": "Introduction to Data Science and Machine Learning",
       "position": "Teaching Assistant",
       "startDate": "2024-09-01",
       "endDate": "2025-01-01",
-      "summary": "Taught the revision sessions for the course."
+      "summary": "Co-taught the class lectures & the revision sessions, prepared and marked assignments"
     },
     {
       "name": "Physics Laboratory Courses",
@@ -131,6 +139,13 @@
       "publisher": "Astronomy & Astrophysics",
       "releaseDate": "2025-01-12",
       "url": "https://arxiv.org/abs/2501.06961",
+      "summary": ""
+    },
+    {
+      "name": "Euclid preparation: Towards a DR1 application of higher-order weak lensing statistics",
+      "publisher": "arXiv preprint arXiv:2510.04953",
+      "releaseDate": "2025",
+      "url": "https://arxiv.org/abs/2510.04953",
       "summary": ""
     },
     {
