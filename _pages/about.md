@@ -6,7 +6,7 @@ permalink: /
 
 profile:
   align: right
-  image: prof_pic.png
+  image: prof_pic_cropped.jpeg
   image_circular: False # crops the image to make it circular
   more_info: >
     <p><i class="fab fa-github"></i> <a href='https://github.com/AndreasTersenov'>@AndreasTersenov</a></p>
