@@ -1,13 +1,25 @@
-_site
-.bundle
-.sass-cache
-.jekyll-cache
-.jekyll-metadata
-.DS_store
-.ruby-version
-.tweet-cache
-Gemfile.lock
-assets/libs/
-node_modules/
-vendor
+# dependencies
+/node_modules
+# next.js
+/.next
+/out
+# production
+/build
+# misc
+.DS_Store
+*.pem
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+# env
+.env*.local
+# vercel / editors
+.vercel
 .idea
+
+# local agent / design artifacts
+.claude/
+/design
+design.bin
+*.tsbuildinfo
