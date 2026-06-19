@@ -22,7 +22,7 @@ const education: Row[] = [
   },
   {
     when: "2018 — 2022",
-    role: "BSc in Physics — 9.15/10, top 2%",
+    role: "BSc in Physics",
     where: "University of Crete",
     desc: "Thesis on cosmic-ray air-shower simulations with new physics above 50 TeV. Supervisors: V. Pavlidou, E. Kiritsis.",
   },
@@ -74,16 +74,22 @@ const honors: Row[] = [
 
 const teaching: Row[] = [
   {
+    when: "June 2026",
+    role: "Lecturer · AstroStat School — New York",
+    where: "CUNY Graduate Center, New York",
+    desc: "Bayesian inference, advanced sampling, deep learning (lectures + hands-on).",
+  },
+  {
     when: "Nov 2025",
-    role: "Lecturer · Sharjah Winter School for AstroStatistics",
-    where: "SAASST, UAE",
+    role: "Lecturer · Winter School for AstroStatistics",
+    where: "SAASST, Sharjah, UAE",
     desc: "Bayesian inference, advanced sampling, simulation-based inference (lectures + hands-on).",
   },
   {
     when: "2024 & 2025",
     role: "Co-organiser & lecturer · Astrostatistics Summer School in Crete",
     where: "FORTH, Heraklion",
-    desc: "Two editions, ~35 participants each, selected from ~150 applicants. Lectures on Bayesian inference, model selection, MCMC, and SBI.",
+    desc: "Two editions. Bayesian inference & model selection (2024); MCMC & advanced sampling (2025); simulation-based inference (both).",
   },
   {
     when: "Fall 2024",

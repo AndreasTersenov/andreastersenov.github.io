@@ -8,9 +8,10 @@ type Row = { when: string; role: string; where: string; desc?: string };
 type Talk = { when: string; title: string; venue: string; kind: string };
 
 const schools: Row[] = [
-  { when: "Nov 2025",   role: "Lecturer, Sharjah Winter School for AstroStatistics", where: "SAASST, United Arab Emirates", desc: "Bayesian inference, advanced sampling, simulation-based inference: lectures and hands-on tutorials. About 35 international participants." },
-  { when: "June 2025",  role: "Co-organiser and lecturer, Astrostatistics Summer School in Crete", where: "FORTH, Heraklion", desc: "Second edition. MCMC and advanced sampling, simulation-based inference. About 35 participants selected from 150 applicants across 20 countries." },
-  { when: "July 2024",  role: "Co-organiser and lecturer, Astrostatistics Summer School in Crete", where: "FORTH, Heraklion", desc: "Inaugural edition. Introduction to Bayesian inference, Bayesian model selection, simulation-based inference." },
+  { when: "June 2026",  role: "Lecturer, AstroStat School — New York", where: "CUNY Graduate Center, New York, USA", desc: "Introduction to Bayesian inference, advanced sampling, and deep learning: lectures and hands-on tutorials." },
+  { when: "Nov 2025",   role: "Lecturer, Winter School for AstroStatistics", where: "SAASST, Sharjah, United Arab Emirates", desc: "Introduction to Bayesian inference, advanced sampling, and simulation-based inference: lectures and hands-on tutorials." },
+  { when: "June 2025",  role: "Co-organiser and lecturer, Astrostatistics Summer School in Crete (2nd edition)", where: "FORTH, Heraklion", desc: "MCMC and advanced sampling, simulation-based inference. About 35 participants selected from ~150 applicants across ~20 countries." },
+  { when: "July 2024",  role: "Co-organiser and lecturer, Astrostatistics Summer School in Crete (inaugural edition)", where: "FORTH, Heraklion", desc: "Introduction to Bayesian inference, Bayesian model selection, simulation-based inference." },
 ];
 
 const courses: Row[] = [
