@@ -9,7 +9,7 @@ type Post = { title: string; excerpt: string; date: string; tag: string; href?: 
 
 const posts: Post[] = [
   {
-    title: "Sampling is sampling: a cosmologist audits LLM test-time compute",
+    title: "Sampling is sampling: an outsider's audit of LLM test-time compute",
     excerpt:
       "The benchmark-winning way of making an LLM think harder samples the wrong distribution and silently destroys its own confidence signal. With an interactive replay of real runs, a seventy-year-old fix, and a dictionary between cosmology and test-time compute.",
     date: "July 2, 2026",

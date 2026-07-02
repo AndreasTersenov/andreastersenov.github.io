@@ -78,7 +78,7 @@ export default function SamplingIsSamplingPost() {
               <span className="badge">Research</span>
               <span className="caption">July 2, 2026 · Andreas Tersenov</span>
             </div>
-            <h1>Sampling is sampling: a cosmologist audits LLM test-time compute</h1>
+            <h1>Sampling is sampling: an outsider's audit of LLM test-time compute</h1>
             <p className="post-standfirst">
               The benchmark-winning way of making a language model &ldquo;think harder&rdquo;
               samples the wrong distribution, silently destroys its own confidence signal, and the
