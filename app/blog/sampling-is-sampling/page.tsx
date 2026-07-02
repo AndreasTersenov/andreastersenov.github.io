@@ -4,7 +4,7 @@ import { postHtml } from "./post-html";
 export const metadata = {
   title: "Sampling is sampling — Andreas Tersenov",
   description:
-    "A cosmologist audits LLM test-time compute: the benchmark-winning particle filter samples the wrong distribution, the damage to its confidence signal is irreversible, and a 25% insurance stratum prevents it.",
+    "An outsider's audit of LLM test-time compute: the benchmark-winning particle filter samples the wrong distribution, the damage to its confidence signal is irreversible, and a 25% insurance stratum prevents it.",
 };
 
 const KATEX = "https://cdn.jsdelivr.net/npm/katex@0.16.11/dist";
