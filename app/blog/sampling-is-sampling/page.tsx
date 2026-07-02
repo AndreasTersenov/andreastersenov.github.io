@@ -15,7 +15,12 @@ const postCss = `
   font-family: var(--font-display); font-weight: 400; letter-spacing: -0.5px;
   font-size: clamp(30px, 4.5vw, 44px); line-height: 1.15; color: var(--ink); margin: 14px 0 10px;
 }
-.post-standfirst { color: var(--muted); font-size: 17px; line-height: 1.6; margin: 0; }
+.post-body blockquote {
+  margin: 0 0 26px; padding: 14px 18px; border-left: 3px solid var(--accent-teal);
+  background: var(--surface-soft); border-radius: 0 10px 10px 0;
+  color: var(--body); font-size: 16px; line-height: 1.65;
+}
+.post-body blockquote p { margin: 0; }
 .post-body { max-width: 760px; margin: 0 auto; font-size: 17px; line-height: 1.72; color: var(--body); }
 .post-body h2 {
   font-family: var(--font-display); font-weight: 400; letter-spacing: -0.3px;
@@ -79,12 +84,6 @@ export default function SamplingIsSamplingPost() {
               <span className="caption">July 2, 2026 · Andreas Tersenov</span>
             </div>
             <h1>Sampling is sampling: an outsider's audit of LLM test-time compute</h1>
-            <p className="post-standfirst">
-              The benchmark-winning way of making a language model &ldquo;think harder&rdquo;
-              samples the wrong distribution, silently destroys its own confidence signal, and the
-              damage is irreversible by the time you look. The mathematics that shows this is
-              seventy years old, and it comes with a cheap fix.
-            </p>
           </header>
 
           <article
