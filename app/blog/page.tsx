@@ -1,10 +1,21 @@
+import Link from "next/link";
 import PageFade from "../components/PageFade";
 import SectionHeader from "../components/SectionHeader";
 import Reveal from "../components/Reveal";
 
 export const metadata = { title: "Blog — Andreas Tersenov" };
 
-const posts = [
+type Post = { title: string; excerpt: string; date: string; tag: string; href?: string };
+
+const posts: Post[] = [
+  {
+    title: "Sampling is sampling: a cosmologist audits LLM test-time compute",
+    excerpt:
+      "The benchmark-winning way of making an LLM think harder samples the wrong distribution and silently destroys its own confidence signal. With an interactive replay of real runs, a seventy-year-old fix, and a dictionary between cosmology and test-time compute.",
+    date: "July 2, 2026",
+    tag: "Research",
+    href: "/blog/sampling-is-sampling/",
+  },
   {
     title: "Why I think simulation-based inference is the right tool for next-generation cosmology",
     excerpt:
@@ -18,13 +29,6 @@ const posts = [
       "What changes when you swap a hand-tuned regulariser for a learned denoising prior, and why uncertainty quantification stops being optional.",
     date: "Coming soon",
     tag: "Method",
-  },
-  {
-    title: "Notes from the Sharjah Winter School",
-    excerpt:
-      "Teaching SBI to 35 astronomers in five days. What worked, what didn't, and the questions that kept coming back.",
-    date: "Coming soon",
-    tag: "Notes",
   },
 ];
 
@@ -48,7 +52,13 @@ export default function BlogPage() {
                   <div>
                     <h3 className="blog-title">{p.title}</h3>
                     <p className="blog-excerpt">{p.excerpt}</p>
-                    <span className="pub-link">Read</span>
+                    {p.href ? (
+                      <Link className="pub-link" href={p.href}>
+                        Read
+                      </Link>
+                    ) : (
+                      <span className="pub-link">Read</span>
+                    )}
                   </div>
                 </article>
               ))}

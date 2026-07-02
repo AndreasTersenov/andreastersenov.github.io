@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trace replay — watch the toast burn</title>
+<link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<style>
+  :root {
+    --ink: #0b0b0b; --ink2: #52514e; --grid: #d8d7d3; --paper: #fdfdfc;
+    --blue: #2a78d6; --aqua: #1baf7a; --red: #e34948; --yellow: #eda100;
+    --violet: #4a3aa7; --ash: #d8d7d3;
+    --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 20px 16px 28px; }
+  .eyebrow { font: 12px/1 var(--mono); color: var(--ink2); margin-bottom: 6px; }
+  h1 { font-size: 21px; margin: 0 0 2px; font-weight: 650; }
+  .sub { color: var(--ink2); font-size: 13.5px; margin: 0 0 14px; }
+  .controls { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: end; margin-bottom: 10px; }
+  .ctl label { display: block; font: 12px/1.6 var(--mono); color: var(--ink2); }
+  select, .seg button {
+    font: 13px var(--mono); color: var(--ink); background: #fff;
+    border: 1px solid var(--grid); border-radius: 6px; padding: 5px 9px;
+  }
+  select:focus-visible, .seg button:focus-visible, #step:focus-visible, #play:focus-visible {
+    outline: 2px solid var(--blue); outline-offset: 1px;
+  }
+  .seg { display: inline-flex; gap: 0; }
+  .seg button { border-radius: 0; border-right-width: 0; cursor: pointer; }
+  .seg button:first-child { border-radius: 6px 0 0 6px; }
+  .seg button:last-child { border-radius: 0 6px 6px 0; border-right-width: 1px; }
+  .seg button[aria-pressed="true"] { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .stepper { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 240px; }
+  #step { flex: 1; accent-color: var(--ink); }
+  #play { font: 13px var(--mono); background: #fff; border: 1px solid var(--grid);
+          border-radius: 6px; padding: 5px 10px; cursor: pointer; }
+  .problem {
+    border: 1px solid var(--grid); border-radius: 8px; padding: 9px 12px; margin-bottom: 12px;
+    font-size: 13px; color: var(--ink2); background: #fff;
+  }
+  .problem code { font: 12px var(--mono); color: var(--ink); }
+  svg { width: 100%; height: auto; display: block; }
+  .panel { border: 1px solid var(--grid); border-radius: 8px; background: #fff; padding: 8px 6px 2px; }
+  .readouts { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+              gap: 10px; margin-top: 12px; }
+  .lamp-card { border: 1px solid var(--grid); border-radius: 8px; padding: 10px 12px; background: #fff; }
+  .lamp-card h3 { margin: 0 0 4px; font: 12px/1.4 var(--mono); color: var(--ink2);
+                  font-weight: 500; }
+  .lampline { display: flex; align-items: center; gap: 8px; }
+  .lamp { width: 12px; height: 12px; border-radius: 50%; flex: none; box-shadow: 0 0 0 3px #fff inset; }
+  .big { font: 600 20px var(--mono); }
+  .lamp-card .note { font-size: 12px; color: var(--ink2); margin-top: 2px; }
+  .answers { margin-top: 4px; }
+  .ansrow { display: flex; align-items: center; gap: 8px; font: 12.5px var(--mono); margin: 3px 0; }
+  .ansbar { height: 10px; border-radius: 3px; min-width: 2px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 4px 18px; padding: 8px 10px 6px;
+            border-top: 1px solid var(--grid); margin-top: 6px; font-size: 12px; color: var(--ink2); }
+  .li { display: inline-flex; align-items: center; gap: 6px; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+  .dot.term { width: 11px; height: 11px; border: 1.5px solid #fff; box-shadow: 0 0 0 1px var(--grid); }
+  .seg-line { width: 22px; height: 0; border-top: 2px solid; flex: none; }
+  .foot { margin-top: 14px; font-size: 12.5px; color: var(--ink2); }
+  .foot a { color: var(--blue); }
+  @media (prefers-reduced-motion: reduce) { #play { display: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">particle-reasoners · trace replay · real logged runs</div>
+  <h1>Watch the toast burn</h1>
+  <p class="sub">A particle filter searches for a math answer: at every step it kills low-scoring
+    attempts and clones high-scoring ones. Scrub through a real run and watch the family tree
+    collapse — while the population's confidence stays pinned at 100%.</p>
+
+  <div class="controls">
+    <div class="ctl"><label for="prob">problem</label>
+      <select id="prob" aria-label="choose a problem"></select></div>
+    <div class="ctl"><label>particle budget N</label>
+      <span class="seg" id="nseg" role="group" aria-label="particle budget"></span></div>
+    <div class="ctl stepper"><label for="step" style="flex:none">step</label>
+      <input type="range" id="step" min="0" value="0" step="1" aria-label="replay step">
+      <button id="play" aria-label="play the run">▶ play</button></div>
+  </div>
+
+  <div class="problem" id="ptext"></div>
+  <div class="panel"><svg id="tree" role="img" aria-label="particle genealogy"></svg>
+    <div class="legend" aria-hidden="false">
+      <span class="li"><span class="dot" style="background:#2a78d6"></span>ancestor of the final population</span>
+      <span class="li"><span class="dot" style="background:#d8d7d3"></span>lineage dies out (killed by resampling)</span>
+      <span class="li"><span class="dot term" style="background:#1baf7a"></span>final answer — correct</span>
+      <span class="li"><span class="dot term" style="background:#e34948"></span>final answer — wrong</span>
+      <span class="li"><span class="seg-line" style="border-color:#2a78d6; opacity:.55"></span>surviving bloodline</span>
+      <span class="li"><span class="seg-line" style="border-color:#d8d7d3"></span>extinct branch</span>
+      <span class="li" style="color:#9b9a96">hover any particle to light up its ancestry</span>
+    </div>
+  </div>
+
+  <div class="readouts">
+    <div class="lamp-card">
+      <h3>population confidence</h3>
+      <div class="lampline"><span class="lamp" id="conf-lamp"></span><span class="big" id="conf"></span></div>
+      <div class="note" id="conf-note"></div>
+    </div>
+    <div class="lamp-card">
+      <h3>weight witness (ESS)</h3>
+      <div class="lampline"><span class="lamp" id="wit-w-lamp"></span><span class="big" id="wit-w"></span></div>
+      <div class="note">the deceptive one — reads “all clear” on near-copies</div>
+    </div>
+    <div class="lamp-card">
+      <h3>ancestry witness</h3>
+      <div class="lampline"><span class="lamp" id="wit-a-lamp"></span><span class="big" id="wit-a"></span></div>
+      <div class="note">distinct surviving lineages — when this dies, no repair is possible</div>
+    </div>
+    <div class="lamp-card">
+      <h3>final answers</h3>
+      <div class="answers" id="answers"></div>
+    </div>
+  </div>
+
+  <p class="foot">Every run shown is a real logged trace (Qwen2.5-Math-1.5B + PRM-7B on MATH-500,
+    the resample-every-step particle filter of Puri et al. 2025). Hover a final particle to trace
+    its ancestry. Companion post: <a href="../../">“Sampling is sampling”</a>.</p>
+</div>
+
+<script src="data.js"></script>
+<script>
+(() => {
+  const DATA = window.TRACE_DATA;
+  const COL = { alive: "#2a78d6", ash: "#d8d7d3", correct: "#1baf7a", wrong: "#e34948",
+                none: "#9b9a96", link: "#c9c8c4", hi: "#0b0b0b" };
+  const $ = id => document.getElementById(id);
+  const svg = $("tree");
+  let P = 0, N = "16", S = Infinity, timer = null;  // start at the full run
+
+  const probSel = $("prob");
+  DATA.problems.forEach((p, i) => {
+    const r = p.runs["32"];
+    const label = `${p.id}  (${r.answers.length === 1 ? (r.correct[0] ? "unanimous, right" : "unanimous, WRONG") : r.answers.length + " answers"})`;
+    const o = document.createElement("option");
+    o.value = i; o.textContent = label; probSel.appendChild(o);
+  });
+  probSel.addEventListener("change", () => { P = +probSel.value; S = Infinity; render(); });
+
+  const nseg = $("nseg");
+  ["4", "8", "16", "32"].forEach(n => {
+    const b = document.createElement("button");
+    b.textContent = n; b.setAttribute("aria-pressed", n === N);
+    b.addEventListener("click", () => {
+      N = n; S = Infinity;
+      nseg.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b));
+      render();
+    });
+    nseg.appendChild(b);
+  });
+
+  $("step").addEventListener("input", e => { S = +e.target.value; render(false); });
+  $("play").addEventListener("click", () => {
+    if (timer) { clearInterval(timer); timer = null; $("play").textContent = "▶ play"; return; }
+    S = 0; $("play").textContent = "⏸";
+    timer = setInterval(() => {
+      const run = DATA.problems[P].runs[N];
+      if (S >= run.steps.length) { clearInterval(timer); timer = null; $("play").textContent = "▶ play"; return; }
+      S += 1; $("step").value = S; render(false);
+    }, 650);
+  });
+
+  function lamp(el, color) { el.style.background = color; }
+
+  // render bare LaTeX (answers, gold) via KaTeX when available; degrade to raw text offline
+  function tex(el, src) {
+    if (window.katex) {
+      try { el.innerHTML = katex.renderToString(src, { throwOnError: false }); return; }
+      catch (e) { /* fall through */ }
+    }
+    el.textContent = src;
+  }
+
+  // which particle slots at step s are ancestors of the FINAL population (alive) vs doomed (ash)
+  function aliveMask(run, upto) {
+    const T = run.steps.length;
+    let alive = run.steps[T - 1].map((p, i) => p[0] !== -2);
+    const masks = new Array(T); masks[T - 1] = alive.slice();
+    for (let s = T - 1; s > 0; s--) {
+      const prev = new Array(run.steps[s - 1].length).fill(false);
+      run.steps[s].forEach((p, i) => { if (masks[s][i] && p[0] >= 0) prev[p[0]] = true; });
+      masks[s - 1] = prev;
+    }
+    return masks;
+  }
+
+  function odds(x) { const c = Math.min(Math.max(x, 1e-4), 1 - 1e-4); return c / (1 - c); }
+
+  // walk each current particle's ancestry: interior score product (weight witness) + root slot
+  function witnesses(run, s) {
+    const cur = run.steps[s - 1] || [];
+    const roots = new Set(), logc = [];
+    cur.forEach((p, i) => {
+      let idx = i, lc = 0;
+      for (let t = s - 1; t >= 0; t--) {
+        const rec = run.steps[t][idx];
+        if (!(t === s - 1 && rec[2])) lc -= Math.log(odds(rec[1]));  // interior scores only
+        if (t === 0) roots.add(idx);
+        else idx = rec[0] >= 0 ? rec[0] : idx;
+      }
+      logc.push(lc);
+    });
+    const m = Math.max(...logc);
+    const w = logc.map(x => Math.exp(x - m)), sw = w.reduce((a, b) => a + b, 0);
+    const ess = 1 / w.reduce((a, b) => a + (b / sw) ** 2, 0) / w.length;
+    return { ess, roots: roots.size };
+  }
+
+  function render(resetSlider = true) {
+    const prob = DATA.problems[P], run = prob.runs[N];
+    const T = run.steps.length, n = run.steps[0].length;
+    if (S > T || S === Infinity) S = T;
+    const stepEl = $("step"); stepEl.max = T; if (resetSlider) stepEl.value = S;
+
+    $("ptext").innerHTML = `${prob.text.replace(/</g, "&lt;")}&nbsp;
+      <code>gold: <span id="gold"></span></code>`;
+    tex($("gold"), prob.gold);
+    if (window.renderMathInElement) renderMathInElement($("ptext"), {
+      delimiters: [{left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+                   {left: "$", right: "$", display: false}, {left: "\\(", right: "\\)", display: false}],
+      throwOnError: false });
+
+    // ---- geometry
+    const W = 940, dx = Math.min(120, (W - 120) / Math.max(T, 1)), dy = Math.max(12, Math.min(26, 460 / n));
+    const H = n * dy + 48, x0 = 66, y0 = 30;
+    const masks = aliveMask(run);
+    let out = "";
+    // links + nodes up to step S
+    for (let s = 0; s < S; s++) {
+      const x = x0 + s * dx;
+      out += `<text x="${x}" y="${y0 - 14}" font-size="10" fill="#52514e" text-anchor="middle"
+               font-family="ui-monospace,monospace">${s + 1}</text>`;
+      run.steps[s].forEach((p, i) => {
+        if (p[0] === -2) return;
+        const y = y0 + i * dy;
+        if (s > 0 && p[0] >= 0) {
+          const py = y0 + p[0] * dy, px = x - dx;
+          const dead = !masks[s][i];
+          out += `<path d="M${px + 5},${py} C${px + dx / 2},${py} ${px + dx / 2},${y} ${x - 5},${y}"
+                   fill="none" stroke="${dead ? COL.ash : COL.alive}" stroke-opacity="${dead ? 1 : 0.55}"
+                   stroke-width="${dead ? 1.2 : 2}"/>`;
+        }
+      });
+    }
+    for (let s = 0; s < S; s++) {
+      const x = x0 + s * dx, last = s === T - 1;
+      run.steps[s].forEach((p, i) => {
+        if (p[0] === -2) return;
+        const y = y0 + i * dy, dead = !masks[s][i];
+        let fill = dead ? COL.ash : COL.alive;
+        if (p[2] && p[3] >= 0) fill = run.correct[p[3]] ? COL.correct : COL.wrong;
+        out += `<circle data-s="${s}" data-i="${i}" cx="${x}" cy="${y}" r="${p[2] ? 5.5 : 4}"
+                 fill="${fill}"${p[2] ? ` stroke="#fff" stroke-width="1.4"` : ""}/>`;
+      });
+    }
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+    svg.innerHTML = out;
+
+    // hover: highlight full ancestry of a node
+    svg.querySelectorAll("circle").forEach(c => {
+      c.addEventListener("mouseenter", () => {
+        let idx = +c.dataset.i;
+        for (let t = +c.dataset.s; t >= 0; t--) {
+          const node = svg.querySelector(`circle[data-s="${t}"][data-i="${idx}"]`);
+          if (node) { node.setAttribute("stroke", COL.hi); node.setAttribute("stroke-width", "2.2"); }
+          const rec = run.steps[t][idx]; idx = rec[0] >= 0 ? rec[0] : idx;
+        }
+      });
+      c.addEventListener("mouseleave", () => render(false));
+    });
+
+    // ---- readouts: confidence over the CURRENT population — each slot's answer is the most
+    // recent terminal record on its own lineage (slots are reused after resampling, so counting
+    // terminal events across steps would overcount; walk the genealogy instead)
+    const seen = new Map();
+    let terminals = 0;
+    if (S >= 1) run.steps[S - 1].forEach((p, i) => {
+      let idx = i, ans = -1;
+      for (let t = S - 1; t >= 0; t--) {
+        const rec = run.steps[t][idx];
+        if (rec[2] && rec[3] >= 0) { ans = rec[3]; break; }
+        idx = rec[0] >= 0 ? rec[0] : idx;
+      }
+      if (ans >= 0) { seen.set(ans, (seen.get(ans) || 0) + 1); terminals += 1; }
+    });
+    const entries = [...seen.entries()].sort((a, b) => b[1] - a[1]);
+    const conf = terminals ? entries[0][1] / terminals : 0;
+    $("conf").textContent = terminals ? (100 * conf).toFixed(0) + "%" : "—";
+    lamp($("conf-lamp"), terminals && conf > 0.9 ? COL.correct : COL.none);
+    $("conf-note").textContent = terminals
+      ? (conf > 0.9 ? "“certain.” the lamp is green no matter what the tree says" : "population still hedging")
+      : "no particle has answered yet";
+
+    if (S >= 1) {
+      const wit = witnesses(run, S);
+      $("wit-w").textContent = (100 * wit.ess).toFixed(0) + "%";
+      lamp($("wit-w-lamp"), wit.ess > 0.5 ? COL.correct : (wit.ess > 0.15 ? "#eda100" : COL.wrong));
+      $("wit-a").textContent = `${wit.roots} / ${n}`;
+      lamp($("wit-a-lamp"), wit.roots / n > 0.5 ? COL.correct : (wit.roots / n > 0.15 ? "#eda100" : COL.wrong));
+    } else { $("wit-w").textContent = "—"; $("wit-a").textContent = "—"; }
+
+    const ansEl = $("answers"); ansEl.innerHTML = "";
+    if (!entries.length) ansEl.innerHTML = `<div class="ansrow" style="color:#52514e">none yet</div>`;
+    entries.slice(0, 4).forEach(([ai, count]) => {
+      const ok = run.correct[ai];
+      const row = document.createElement("div"); row.className = "ansrow";
+      row.innerHTML = `<span class="ansbar" style="width:${(60 * count / terminals).toFixed(0)}px;
+        background:${ok ? COL.correct : COL.wrong}"></span>
+        <span class="anstex"></span>
+        <span style="color:#52514e">×${count}${ok ? " ✓" : " ✗"}</span>`;
+      tex(row.querySelector(".anstex"), run.answers[ai]);
+      ansEl.appendChild(row);
+    });
+  }
+
+  render();
+  // deferred KaTeX lands after first paint — render math once it's available
+  window.addEventListener("load", () => render(false));
+})();
+</script>
+</body>
+</html>
