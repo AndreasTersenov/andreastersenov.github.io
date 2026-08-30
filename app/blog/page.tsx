@@ -9,6 +9,14 @@ type Post = { title: string; excerpt: string; date: string; tag: string; href?: 
 
 const posts: Post[] = [
   {
+    title: "What does it take to discover science?",
+    excerpt:
+      "Language models are already good at searching within an existing scientific description. The harder thing is deciding when that description itself has to change, and the training record we give them, plus the objectives we score them on, may be exactly the wrong ones for that.",
+    date: "August 30, 2026",
+    tag: "Essay",
+    href: "/blog/what-does-it-take-to-discover-science/",
+  },
+  {
     title: "Sampling is sampling: an outsider's audit of LLM test-time compute",
     excerpt:
       "The benchmark-winning way of making an LLM think harder samples the wrong distribution and silently destroys its own confidence signal. With an interactive replay of real runs, a seventy-year-old fix, and a dictionary between cosmology and test-time compute.",
