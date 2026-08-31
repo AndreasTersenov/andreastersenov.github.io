@@ -681,3 +681,22 @@ html[data-theme="dark"] .card { background: var(--surface-dark-elevated); }
     scroll-behavior: auto !important;
   }
 }
+
+/* ---- Blog posts in dark mode -------------------------------------------
+   Post styles live in each post's page.tsx and use --ink / --body /
+   --body-strong. Dark mode here overrides `color` per selector rather than
+   redefining those tokens, so without these rules post text keeps its light
+   (near-black) values on a dark background. Applies to every /blog/* post. */
+html[data-theme="dark"] .post-header h1 { color: var(--on-dark); }
+html[data-theme="dark"] .post-body { color: var(--on-dark); }
+html[data-theme="dark"] .post-body h2 { color: var(--on-dark); }
+html[data-theme="dark"] .post-body strong { color: var(--on-dark); }
+html[data-theme="dark"] .post-body em { color: inherit; }
+html[data-theme="dark"] .post-body blockquote {
+  background: var(--surface-dark-elevated); color: var(--on-dark);
+}
+html[data-theme="dark"] .post-body code { background: var(--surface-dark-elevated); }
+html[data-theme="dark"] .post-body th,
+html[data-theme="dark"] .post-body td { border-color: var(--hairline-dark); }
+html[data-theme="dark"] .post-body img { border-color: var(--hairline-dark); }
+html[data-theme="dark"] .post-body ol.post-refs { color: var(--on-dark-soft); }

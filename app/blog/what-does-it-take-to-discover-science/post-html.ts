@@ -121,13 +121,12 @@ reframing is intrinsically valuable.</p>
 <h2>Some revisions cost more than others</h2>
 
 <p>Suppose an agent obtains an unexpected result. There may be many ways to improve its fit. It can
-change a parameter, alter the functional form, add a correction term, change the noise model,
-introduce another component, or question one of the assumptions defining the problem. <strong>These moves
+change a parameter, alter the functional form, add a correction term, or question one of the assumptions defining the problem. <strong>These moves
 have different epistemic costs</strong>.</p>
 
 <p>An expert scientist often has an implicit ordering over them. Some changes would require
 abandoning principles that have been tested thousands of times, others would just revise an
-approximation introduced for convenience. The ordering determines where to search first.</p>
+approximation introduced for convenience. The ordering determines <em>where to search first</em>.</p>
 
 <p>A language model may instead have access to all of these alternatives primarily as linguistic associations, 
 which does not ensure that they are given the right relative status during an autonomous search.
@@ -175,14 +174,13 @@ picture is adequate. Their ability to discover new concepts is substantially les
 their ability to search over familiar descriptions, even in environments where the observations,
 experiments, and evaluation procedure are all controlled.</p>
 
-<p>That is a very different problem from being unable to solve difficult equations.</p>
 
 <h2>Metrics evaluate inside a fixed model space</h2>
 
 <p>Once we think about scientific discovery in this way, some familiar problems with autonomous
 research become easier to interpret. An agent needs a way to decide which hypothesis to investigate
 next. In many systems, the easiest solution is to use some measurable proxy (a loss, a benchmark
-score, a likelihood, a prediction error, a convergence criterion, or a similar quantity).</p>
+score, a likelihood, or a similar quantity).</p>
 
 <p>While these metrics are useful, scientific truth is never fully captured by any one of them. This
 becomes especially clear when the model used for analysis is itself an approximation, as in simulation-based inference. There, a simulator
@@ -197,7 +195,7 @@ which can provide genuine evidence when the competing models and assumptions are
 The limitation is still that these methods evaluate alternatives <strong>within a model space that has
 already been chosen</strong>. They can tell us whether one specified explanation is better supported than
 another, but they do not by themselves tell us whether an important class of explanations is
-<em>missing</em>.</p>
+missing.</p>
 
 <p>The situation is even more difficult when the scientifically important change initially makes
 the standard metric worse. Imagine a researcher promotes something previously treated as a nuisance
@@ -226,7 +224,7 @@ The scientific literature is by construction a poor record of this process. The 
 common outside of modern AI as well. Studies of the reproduction of experimental technologies have
 long found that published descriptions can omit practical knowledge that becomes obvious only
 through direct experience with the system (<a href="https://journals.sagepub.com/doi/10.1177/030631277400400203">Collins
-1974</a>). The same obstacle reappears when the reproducing agent is a machine: recent work on
+1974</a>). The same obstacle reappears when the reproducing agent is a machine. Recent work on
 automated paper reproduction argues that the bottleneck is not information retrieval but the tacit
 knowledge that papers inevitably leave implicit (<a href="https://arxiv.org/abs/2603.01801">Li et
 al. 2026</a>).</p>
@@ -270,8 +268,8 @@ The question would be whether the system can discover
 that the old classification has stopped working.</p>
 
 <p>These experiments would also give us a way to distinguish two explanations for the present
-limitations. Perhaps current systems mainly need more capability, better search, longer horizons,
-better memory, and better interfaces. Or perhaps an important part of the problem lies in the
+limitations. Perhaps current systems mainly need more capability, better search, longer horizons, and 
+better memory. Or perhaps an important part of the problem lies in the
 training record and the research objectives themselves. The evidence is not yet sufficient (at least for me) to decide between
 these explanations.</p>
 
@@ -281,13 +279,13 @@ these explanations.</p>
 
 <p>One obvious change would be to record much more of the research process. Failed experiments,
 intermediate analyses, abandoned hypotheses, anomalous diagnostics, and reasons for changing
-direction should be <strong>treated as scientific data rather than disposable intermediate states</strong>. If we
+direction should be <strong>treated as scientific data instead of just disposable intermediate states</strong>. If we
 want models to learn scientific judgment, these traces may be more informative than another large
 collection of polished papers.</p>
 
 <p>A second change would be to expose agents to more detailed diagnostics rather than just single scalar
-measures of success. Residual structure, asymptotic behavior, controlled
-misspecification, symmetry violations, spatial correlations, spectral signatures,... 
+measures of success. Things like residual structure, asymptotic behavior, controlled
+misspecification, symmetry violations, ... 
 can tell us much more about why a model is wrong than an aggregate loss can. The
 agent should sometimes be asked to explain a discrepancy before being asked to eliminate it.</p>
 
@@ -296,12 +294,12 @@ agent should sometimes be asked to explain a discrepancy before being asked to e
 visible to the research system. It could then be challenged rather than silently inherited from the
 code and the literature.</p>
 
-<p>A fourth would be to design agents with different priors deliberately. Rather than asking
+<p>A fourth would be to design agents with different priors <em>deliberately</em>. Rather than asking
 several copies of the same system to produce more hypotheses, it may be more useful to let
 different agents defend competing interpretations having a particular prior, or belief hierarchy,
 and then expose all of them to the same evidence.</p>
 
-<p>None of these interventions really solves scientific discovery, but they change the environment
+<p>Probably none of these interventions really solves scientific discovery, but they change the environment
 in which it is attempted.</p>
 
 <p>It is easy to turn a discussion like this into an argument that humans possess some irreducible
