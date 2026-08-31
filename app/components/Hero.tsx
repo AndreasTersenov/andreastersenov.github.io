@@ -7,9 +7,9 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "../lib/gsap";
 import { initHeroMeshWarp } from "../lib/hero-mesh-warp";
 
-const HEADLINE = ["Cosmology,", "AI,", "and", "the"];
-const HEADLINE_ITALIC = ["dark", "side"];
-const HEADLINE_TAIL = ["of", "the", "Universe."];
+const HEADLINE = ["Cosmology"];
+const HEADLINE_ITALIC = ["and"];
+const HEADLINE_TAIL = ["AI."];
 
 export default function Hero() {
   const heroRef = useRef<HTMLElement>(null);

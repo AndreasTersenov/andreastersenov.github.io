@@ -37,6 +37,7 @@
   --on-dark:       #faf9f5;
   --on-dark-soft:  #a09d96;
   --on-dark-body:  #e4e0d7;
+  --ink-fixed:     #141413;  /* text on surfaces that stay light in dark mode */
 
   --success: #5db872;
   --warning: #d4a017;
@@ -683,35 +684,25 @@ html[data-theme="dark"] .card { background: var(--surface-dark-elevated); }
   }
 }
 
-/* ---- Blog posts in dark mode -------------------------------------------
-   Post styles live in each post's page.tsx and use --ink / --body /
-   --body-strong. Dark mode here overrides `color` per selector rather than
-   redefining those tokens, so without these rules post text keeps its light
-   (near-black) values on a dark background. Applies to every /blog/* post. */
-html[data-theme="dark"] .post-header h1 { color: var(--on-dark); }
-html[data-theme="dark"] .post-body { color: var(--on-dark); }
-html[data-theme="dark"] .post-body h2 { color: var(--on-dark); }
-html[data-theme="dark"] .post-body strong { color: var(--on-dark); }
-html[data-theme="dark"] .post-body em { color: inherit; }
-html[data-theme="dark"] .post-body blockquote {
-  background: var(--surface-dark-elevated); color: var(--on-dark);
+/* ---- Dark mode: text tokens --------------------------------------------
+   --ink / --body / --body-strong / --muted are text-only tokens (their two
+   background uses are decorative dots, which should be light here anyway).
+   Redefining them fixes every page at once, instead of overriding `color`
+   per selector and missing the ones nobody screenshotted. In particular the
+   bare `p { color: var(--body) }` rule now resolves correctly. */
+html[data-theme="dark"] {
+  --ink:          var(--on-dark);
+  --body-strong:  var(--on-dark);
+  --body:         var(--on-dark-body);
+  --muted:        var(--on-dark-soft);
+  --muted-soft:   var(--on-dark-soft);
+  --hairline:      var(--hairline-dark);
+  --hairline-soft: var(--hairline-dark);
 }
-html[data-theme="dark"] .post-body code { background: var(--surface-dark-elevated); }
-html[data-theme="dark"] .post-body th,
-html[data-theme="dark"] .post-body td { border-color: var(--hairline-dark); }
-html[data-theme="dark"] .post-body img { border-color: var(--hairline-dark); }
-html[data-theme="dark"] .post-body ol.post-refs { color: var(--on-dark-soft); }
 
-/* Paragraphs need a direct rule: the bare `p { color: var(--body) }` above
-   matches the element itself, which beats any colour inherited from
-   .post-body no matter the specificity. Body sits a notch below --on-dark so
-   headings and bold still read as emphasis, as they do in light mode. */
-html[data-theme="dark"] .post-body p,
-html[data-theme="dark"] .post-body li { color: var(--on-dark-body); }
-
-/* --primary is a near-black navy (#1c2a4a): 1.26:1 on the dark surface.
-   Every text use of it becomes the teal already used for post links.
-   Solid buttons keep their own colours — they sit on a --primary fill. */
+/* --primary is a near-black navy (#1c2a4a): 1.26:1 on the dark surface. It
+   cannot be blanket-redefined because solid buttons use it as a *fill*, so
+   only its text uses are remapped to the teal already used for post links. */
 html[data-theme="dark"] a,
 html[data-theme="dark"] .pub-link,
 html[data-theme="dark"] .repo-name,
@@ -722,6 +713,20 @@ html[data-theme="dark"] .hero-kicker .ep,
 html[data-theme="dark"] .section-h .chapter { color: var(--accent-teal); }
 
 html[data-theme="dark"] a.btn-primary { color: var(--on-primary); }
-html[data-theme="dark"] a.btn-on-coral { color: var(--ink); }
+html[data-theme="dark"] a.btn-on-coral { color: var(--ink-fixed); }
 html[data-theme="dark"] a.btn-text { color: var(--on-dark); }
 html[data-theme="dark"] a.nav-brand, html[data-theme="dark"] .nav-brand .name { color: var(--on-dark); }
+
+/* Post surfaces that are backgrounds, not text. */
+html[data-theme="dark"] .post-body blockquote,
+html[data-theme="dark"] .post-body code { background: var(--surface-dark-elevated); }
+html[data-theme="dark"] .post-body ol.post-refs { color: var(--on-dark-soft); }
+
+/* Surfaces that stay light in dark mode: their text must stay dark, so it is
+   pinned to --ink-fixed rather than following the redefined --ink. The rest
+   get a dark surface like every other card. */
+html[data-theme="dark"] .badge { color: var(--ink-fixed); }
+html[data-theme="dark"] .card-canvas,
+html[data-theme="dark"] .btn-icon {
+  background: var(--surface-dark-elevated); border-color: var(--hairline-dark);
+}

@@ -27,7 +27,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Andreas Tersenov — Cosmology, AI, and the dark side of the Universe",
+  title: "Andreas Tersenov — Cosmology and AI",
   description:
     "PhD candidate in cosmology and astrostatistics at FORTH and CosmoStat / CEA Saclay. Weak gravitational lensing, simulation-based inference, and deep learning for the physical sciences.",
 };
