@@ -36,6 +36,7 @@
   --on-primary:    #ffffff;
   --on-dark:       #faf9f5;
   --on-dark-soft:  #a09d96;
+  --on-dark-body:  #e4e0d7;
 
   --success: #5db872;
   --warning: #d4a017;
@@ -700,3 +701,27 @@ html[data-theme="dark"] .post-body th,
 html[data-theme="dark"] .post-body td { border-color: var(--hairline-dark); }
 html[data-theme="dark"] .post-body img { border-color: var(--hairline-dark); }
 html[data-theme="dark"] .post-body ol.post-refs { color: var(--on-dark-soft); }
+
+/* Paragraphs need a direct rule: the bare `p { color: var(--body) }` above
+   matches the element itself, which beats any colour inherited from
+   .post-body no matter the specificity. Body sits a notch below --on-dark so
+   headings and bold still read as emphasis, as they do in light mode. */
+html[data-theme="dark"] .post-body p,
+html[data-theme="dark"] .post-body li { color: var(--on-dark-body); }
+
+/* --primary is a near-black navy (#1c2a4a): 1.26:1 on the dark surface.
+   Every text use of it becomes the teal already used for post links.
+   Solid buttons keep their own colours — they sit on a --primary fill. */
+html[data-theme="dark"] a,
+html[data-theme="dark"] .pub-link,
+html[data-theme="dark"] .repo-name,
+html[data-theme="dark"] .repo-foot a,
+html[data-theme="dark"] .news-row .body a,
+html[data-theme="dark"] .contact-info .item .val a,
+html[data-theme="dark"] .hero-kicker .ep,
+html[data-theme="dark"] .section-h .chapter { color: var(--accent-teal); }
+
+html[data-theme="dark"] a.btn-primary { color: var(--on-primary); }
+html[data-theme="dark"] a.btn-on-coral { color: var(--ink); }
+html[data-theme="dark"] a.btn-text { color: var(--on-dark); }
+html[data-theme="dark"] a.nav-brand, html[data-theme="dark"] .nav-brand .name { color: var(--on-dark); }
