@@ -1,15 +1,11 @@
 // Hand-authored from the essay draft (LLMs_for_science_4). Plain HTML, no build step:
 // edit the paragraphs here directly.
 export const postHtml = `
-<p>There’s no doubt that large language models are becoming increasingly useful research tools. They
-can read papers, write and debug code, do mathematical derivations, search over existing methods,
-design computational experiments, and operate increasingly sophisticated scientific workflows.
-Agents built from these models can now do substantial portions of a research project with
-relatively little supervision. And we can only expect these systems to keep improving.</p>
 
-<p>This progress has already made the question of whether language models are capable of “doing
-science” somewhat obsolete. They clearly are capable of doing many kinds of scientific work. But
-for some reason their capabilities appear very uneven across different parts of research. An LLM
+<p>The question of whether language models are capable of “doing
+science” somewhat obsolete. They clearly are capable of doing many kinds of scientific work, such as
+read papers, write and debug code, do mathematical derivations, and operate increasingly sophisticated scientific workflows.
+But for some reason their capabilities appear very uneven across different parts of research. An LLM
 may be very effective at deriving an equation, implementing an analysis, or adapting a known method
 to a new dataset, while struggling with a problem that requires recognizing that the usual
 description of the problem is inadequate.</p>
@@ -17,7 +13,7 @@ description of the problem is inadequate.</p>
 <p>I have been thinking about it for a while, and I suspect that part of the answer has to do with
 the difference between learning within an existing description and discovering a new one.</p>
 
-<h2>A proof assistant can check the answer</h2>
+<h2>Math and code come with an external check</h2>
 
 <p>LLMs become proficient in a domain roughly by absorbing huge amounts of information and learning
 many specialized procedures and patterns. However, at the “edges of our knowledge”, such
@@ -39,7 +35,7 @@ explicit form.</p>
 
 <p>The objects, rules, and methods of math and code have largely been made explicit. A model can
 learn not only the answers but the space of operations by which those answers are obtained. That’s
-not really true of empirical research more broadly.</p>
+not really true of empirical research.</p>
 
 <p>Although, I feel like I am being a bit unfair here. The distinction in fact may not be really
 between empirical science and math, but more like between problems in which the relevant objects
@@ -52,9 +48,7 @@ think that’s what mathematicians refer to when they say “AI cannot yet creat
 But empirical science also has this extra complication that the external constraint comes from a
 world that our formal descriptions only approximate.</p>
 
-<p>LLMs seem to have a harder time in domains where the important patterns are not yet known, where
-the existing descriptions we have built are incomplete, and where discovering the missing structure
-requires evidence from the world itself. There is no equivalent complete description of what it
+<p>There is no equivalent complete description of what it
 means to do, for example, a good experiment. An experienced researcher may know that a particular
 residual looks suspicious, that an approximation is probably failing in a certain regime, or that a
 seemingly insignificant discrepancy is worth investigating. But actually, much of this knowledge
@@ -62,17 +56,16 @@ was not acquired from a paper stating the rule explicitly. It was acquired by tr
 them fail, comparing different explanations, and gradually learning which signals deserve
 attention.</p>
 
-<h2>A simulator is not the universe</h2>
+<h2>We do not know which omissions will matter</h2>
 
 <p>Science depends on models, and models are useful because they simplify the world. They are a
 form of compression that is both useful, and we also hope that they could give us some insight into
 how reality works. But a cosmological simulator is not the universe, a noise model is not the
-detector, a physical theory is not the system it describes. No description describes reality
-perfectly.</p>
+detector, a physical theory is not the system it describes.</p>
 
-<p>Usually this isn’t a problem. We choose an appropriate level of description for the question we
-are asking. The difficulty is that we do not always know in advance which omissions will eventually
-matter.</p>
+<p>Usually this isn't a problem. We choose an appropriate level of description for the question we
+are asking. The difficulty is that we do not always know in advance which omissions will eventually 
+become important.</p>
 
 <p>Something that can reveal this however is an empirical observation. A measured quantity may
 depend on something that the model treated as irrelevant, or a residual may contain structure that
@@ -90,21 +83,13 @@ For me, the more specific issue is whether the research process gives the system
 evidence capable of contradicting its current representation, and whether the system can use that
 contradiction to change the representation.</p>
 
-<h2>Many explanations and no way to choose</h2>
+<h2>Generating explanations and choosing between them</h2>
 
 <p>An LLM can certainly generate candidate explanations for a discrepancy between its results and
 truth. If we ask it why an estimator is failing, it may immediately propose calibration errors,
 non-Gaussian noise, selection effects, boundary effects, model misspecification, hidden
-correlations, and many other possibilities.</p>
-
-<p>But listing possible explanations is not the same as deciding which one is actually the one that
-matters.</p>
-
-<p>Scientific progress often depends on recognizing that one particular discrepancy is evidence
-that the current way of organizing/representing the problem is wrong. That requires not just a
-large inventory of known failure modes, but also deciding which hypotheses deserve attention, what
-experiment would distinguish them, and which parts of the existing model should be regarded as more
-trustworthy than others. Without that our reasoning becomes unconstrained hypothesis generation.</p>
+correlations, and many other possibilities. But listing possible explanations is not the same as deciding which 
+one is actually the one that deserves attention. Without that our reasoning becomes unconstrained hypothesis generation.</p>
 
 <h2>Scientists do not assign equal status to their assumptions</h2>
 
@@ -122,14 +107,12 @@ observations disagree with a model.</p>
 transformations that accounted for important electromagnetic observations. Einstein didn’t really
 discover an equation that had never existed. He reorganized the interpretation of the available
 theory, taking the relativity principle and the invariance of the speed of light as fundamental and
-removing the need for the ether. The important step was partly a decision about which principles
-should occupy the highest level of the description.</p>
-
-<p>Another example is Zwicky’s inference of unseen matter. Observed galaxy dynamics were difficult
-to reconcile with the visible matter under the existing gravitational framework. One could question
-the observations, question the dynamical assumptions, or infer that the visible matter was not the
-whole story. The scientific judgment there involved deciding which parts of the framework were
-sufficiently trustworthy to preserve and which part should be changed.</p>
+removing the need for the ether. Zwicky’s inference of unseen matter has the same shape: observed
+galaxy dynamics were difficult to reconcile with the visible matter under the existing gravitational
+framework, and one could question the observations, question the dynamical assumptions, or infer
+that the visible matter was not the whole story. In both cases the important step was a decision
+about which parts of the description were trustworthy enough to preserve and which should be
+changed.</p>
 
 <p>In these examples, one can describe the discovery as “simply” the introduction of something new,
 but that description misses that part of what changes was that something that had previously been
@@ -137,10 +120,8 @@ treated as secondary, provisional, or merely calculational (is this a word?) got
 
 <p>Of course these examples should not be romanticized. Scientific history contains many more cases
 in which researchers proposed a new ontology or reframed a problem and were simply wrong. The fact
-that a successful discovery can later be described as a conceptual reframing does not mean that
-reframing is intrinsically valuable. Nevertheless, scientific research requires a structured
-ordering of beliefs because without one there is no principled way to decide what to change when
-the data disagree with a model.</p>
+that a successful discovery can later be described as a conceptual reframing does not always mean that
+reframing is intrinsically valuable.</p>
 
 <h2>Some revisions cost more than others</h2>
 
@@ -157,16 +138,13 @@ approximation introduced for convenience. The ordering determines where to searc
 which does not ensure that they are given the right relative status during an autonomous search.
 They may be missing a sufficiently
 strong mechanism for deciding which commitments should survive a contradiction and which ones
-should be given up. What we would want from a scientific system is neither rigid adherence to its
-priors nor indiscriminate openness to revision. It is the ability to maintain strong commitments in
+should be given up. 
+Neither rigid adherence to priors nor indiscriminate openness to revision are really good scientific strategies. 
+What we would want from a scientific system is the ability to maintain strong commitments in
 proportion to the evidence behind them, while changing those commitments when sufficiently strong
 evidence accumulates.</p>
 
-<p>The interesting question is therefore not whether an AI scientist should have fewer priors. It
-is whether it should have better structured priors, and whether it can revise them when evidence
-justifies doing so.</p>
-
-<h2>A benchmark where the law is hidden</h2>
+<h2>Evidence from DiscoverPhysics</h2>
 
 <p>Recent work on AI systems for scientific discovery provides some evidence that this distinction
 has some meaning.</p>
@@ -174,7 +152,7 @@ has some meaning.</p>
 <p>The <a href="https://arxiv.org/abs/2605.26087">DiscoverPhysics benchmark</a>, for example, asks
 models to infer unfamiliar physical laws in simulated worlds while choosing experiments and
 revising hypotheses over several rounds. It evaluates not only prediction on held-out trajectories
-but also whether the model has recovered the conceptual structure underlying those trajectories.
+but also whether the model has recovered the <em>conceptual structure</em> underlying those trajectories.
 The reported results show that strong frontier models can make substantial progress but still fail
 disproportionately on worlds in which latent structure has to be uncovered. They also show that
 predictive accuracy and conceptual understanding can diverge.</p>
@@ -186,8 +164,7 @@ flexible function but an additional physical component that was absent from the 
 description. In others, additional experimentation allows the system to discover that an apparently
 adequate explanation breaks down outside the regime it first explored.</p>
 
-<p>A model may be perfectly capable of finding a complicated expression that reproduces the observations and still
-fail to identify the mechanism that generated them. The benchmark therefore illustrates a
+<p>The benchmark therefore shows a
 difference between fitting observations within a model and determining which concepts the model
 should contain in the first place. If the model-selection process rewards only the predictive
 score, there is no reason for the agent to prefer the explanation that exposes the correct hidden
@@ -199,7 +176,7 @@ that language models have a fundamental inability to discover new concepts. In f
 successful trajectories show that when an agent performs a sufficiently informative experiment, it
 can revise an initially incorrect hypothesis and recover the underlying law.</p>
 
-<p>What the results may be suggesting is probably a bit more specific: current systems do not
+<p>What the results may be suggesting is that current systems do not
 reliably know what information they need in order to decide whether their current conceptual
 picture is adequate. Their ability to discover new concepts is substantially less reliable than
 their ability to search over familiar descriptions, even in environments where the observations,
@@ -207,7 +184,7 @@ experiments, and evaluation procedure are all controlled.</p>
 
 <p>That is a very different problem from being unable to solve difficult equations.</p>
 
-<h2>When the right move makes the fit worse</h2>
+<h2>Metrics evaluate inside a fixed model space</h2>
 
 <p>Once we think about scientific discovery in this way, some familiar problems with autonomous
 research become easier to interpret. An agent needs a way to decide which hypothesis to investigate
@@ -244,7 +221,7 @@ the problem. The scientific move may instead be to question the objective, the s
 nuisance model, or even the choice of variables.</p>
 
 
-<h2>The literature gives us the winners, not the search</h2>
+<h2>The literature records only the outcome</h2>
 
 <p>The kind of conceptual change in those examples is difficult to infer from the scientific
 literature because the literature usually records the new framework after the reorganization has
@@ -264,8 +241,7 @@ al. 2026</a>).</p>
 
 <p>For LLM systems, this means that they can be trained on an enormous amount of scientific
 knowledge while still seeing only a small and highly selected part of the process that produced
-that knowledge. That puts them in a disadvantageous situation, as frontier science is often driven
-by information that appears exactly when an existing description begins to fail.</p>
+that knowledge. That puts them in a disadvantageous situation.</p>
 
 <p>This may also help explain why diversity matters so much in scientific exploration. A scientific
 field advances through many researchers pursuing different hypotheses. Most are wrong, but the
@@ -280,10 +256,10 @@ confusing agreement with evidence. If ten agents have learned essentially the sa
 literature and the same conventions about what counts as a sensible model, agreement between them
 does not tell us whether the underlying assumptions are correct.</p>
 
-<h2>The question I would actually like to test</h2>
+<h2>Something I'd like to test</h2>
 
-<p>The strongest version of this argument is not that AI systems cannot discover science (as I
-said, that’s already not really true). The more specific hypothesis is that current systems are
+<p>The argument is not that AI systems cannot discover science (as I
+said, that's already not really true). The more specific hypothesis is that current systems are
 much better at searching within an existing scientific representation than at deciding when that
 representation should be changed.</p>
 
@@ -325,10 +301,10 @@ direction should be treated as scientific data rather than disposable intermedia
 want models to learn scientific judgment, these traces may be more informative than another large
 collection of polished papers.</p>
 
-<p>A second change would be to expose agents to structured diagnostics rather than a single scalar
-measure of success. Residual structure, null tests, asymptotic behavior, controlled
-misspecification, symmetry violations, spatial correlations, spectral signatures, and sensitivity
-to interventions can tell us much more about why a model is wrong than an aggregate loss can. The
+<p>A second change would be to expose agents to more detailed diagnostics rather than just single scalar
+measures of success. Residual structure, asymptotic behavior, controlled
+misspecification, symmetry violations, spatial correlations, spectral signatures,... 
+can tell us much more about why a model is wrong than an aggregate loss can. The
 agent should sometimes be asked to explain a discrepancy before being asked to eliminate it.</p>
 
 <p>A third would be to represent assumptions explicitly. If an analysis treats a quantity as
@@ -349,11 +325,11 @@ faculty called scientific creativity and machines do not. The more useful possib
 current systems are being trained on the wrong record and placed in the wrong feedback loop for the
 kind of scientific discovery we are asking them to perform.</p>
 
-<p>We have spent decades making scientific knowledge increasingly explicit. We now have an
-opportunity to make explicit how scientists decide that the current knowledge is insufficient.</p>
+<p>We have spent decades making scientific knowledge increasingly explicit. We now need
+to make explicit how scientists decide that the current knowledge is insufficient.</p>
 
-<p>The open problem for AI-for-science is not simply how to build agents that can execute more
-research. It is how to build agents that can learn from the situations in which their current
+<p>The open problem for AI-for-science is not how to build agents that can execute more
+research, but how to build agents that can learn from the situations in which their current
 description of the world stops working, and decide what should change when it does.</p>
 
 <h2>References</h2>
