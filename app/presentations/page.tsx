@@ -13,7 +13,10 @@ const groups: YearGroup[] = [
   {
     year: "2026",
     talks: [
-      { date: "16 Jun 2026", title: "The Non-Gaussian Universe", event: "FORTH", location: "Heraklion", slug: "NonGaussian_Universe_2026" },
+      { date: "16 Sep 2026", title: "Machine Learning for Non-Gaussian Weak-Lensing Cosmology", event: "Physics-Informed Machine Learning Workshop", location: "FORTH, Heraklion", slug: "PIML_FORTH_2026" },
+      { date: "14 Sep 2026", title: "Trustworthy Non-Gaussian Inference for Weak-Lensing Cosmology", event: "PhD defense", location: "University of Crete", slug: "PhD_Defense_2026" },
+      { date: "24–28 Aug 2026", title: "Unlocking Non-Gaussian Information in Weak Lensing", event: "COSMO-26", location: "Leiden", slug: "cosmo26" },
+      { date: "16 Jun 2026", title: "Can We Trust Higher-Order Weak Lensing? Baryonic Robustness and Learned vs Analytical Summaries", event: "The Non-Gaussian Universe", location: "FORTH, Heraklion", slug: "NonGaussian_Universe_2026" },
       { date: "16 Apr 2026", title: "Reconstructing the Non-Gaussian Universe: Mass Mapping, Higher-Order Statistics, and SBI in Weak Lensing", event: "LAM coffee club", location: "Marseille", slug: "LAM_2026" },
       { date: "17 Mar 2026", title: "Reconstructing the Non-Gaussian Universe: Mass Mapping, Higher-Order Statistics, and SBI in Weak Lensing", event: "ENS scattering club", location: "Paris", slug: "ENS_seminar_2026" },
       { date: "09 Mar 2026", title: "Weak Lensing Mass Mapping, Higher-Order Statistics, and Cosmology Inference", event: "Ciela Institute", location: "Montréal", slug: "JournalClub_Montreal_2026" },
